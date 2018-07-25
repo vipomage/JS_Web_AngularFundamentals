@@ -1,0 +1,18 @@
+
+<div *ngIf="games">
+  <ul>
+    <li *ngFor="let game of games">
+      <h1 [class.myStyle]="isShown">{{game.title | titlecase}}</h1>
+      <br>
+      <h5>With id: {{game.id}}</h5>
+      <br>
+      <img [src]="game.image" alt="">
+      <app-subscribe [subGame]="game"></app-subscribe>
+    </li>
+  </ul>
+  <button (click)="showContacts()">Show Contacts</button>
+</div>
+
+<div *ngIf="isShown">
+  Our contacts....
+</div>
