@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input ,Output,EventEmitter} from "@angular/core";
 import { Game } from "../types/game";
 
 @Component({
@@ -8,12 +8,13 @@ import { Game } from "../types/game";
 })
 export class SubscribeComponent implements OnInit {
   @Input("subGame") subGame: Game;
+  @Output() notification = new EventEmitter<string>( )
   constructor() {}
 
-  showSubscription =()=>{
-    console.log(`The ID is ${this.subGame.id}`)
-  }
+  showSubscription = () => {
+    console.log(`The ID is ${this.subGame.id}`);
+    this.notification.emit('Successfull subscribtion')
+  };
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

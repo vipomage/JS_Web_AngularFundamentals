@@ -7,7 +7,7 @@
       <h5>With id: {{game.id}}</h5>
       <br>
       <img [src]="game.image" alt="">
-      <app-subscribe [subGame]="game"></app-subscribe>
+      <app-subscribe (notification)="notifyMe($event)" [subGame]="game "></app-subscribe>
     </li>
   </ul>
   <button (click)="showContacts()">Show Contacts</button>

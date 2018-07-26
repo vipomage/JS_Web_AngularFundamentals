@@ -34,5 +34,9 @@ export class GameComponent implements OnInit {
     this.user_name = name.value;
   };
 
+  notifyMe = (notification: string) => {
+    console.log(notification);
+  };
+
   ngOnInit() {}
 }
