@@ -1,4 +1,4 @@
 export interface GitHubProfile {
-  login:string;
-  location:string;
+  login: string;
+  location: string;
 }
