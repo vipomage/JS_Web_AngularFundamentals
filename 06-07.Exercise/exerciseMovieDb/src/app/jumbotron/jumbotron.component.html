@@ -1,0 +1,26 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>Find a movie</h1>
+    <p>Search for a movie using the form below:</p>
+    <form #form="ngForm" (submit)="searchAMovie(form.value)">
+      <input required="required"  type="text" class="form-control" name="search" ngModel>
+      <button type="sumbit" class="btn btn-primary mt-2">Search</button>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="searchResult">
+  <div class="panel panel-default search-result">
+    <div class="panel-heading">
+      <h3 class="panel-title m-fix">Matched Movies<br></h3>
+      <h5 class="text-center">Found <em>{{searchResult.results.length}}</em> titles matching your criteria</h5>
+    </div>
+    <div class="panel-body">
+      <div class="row d-flex justify-content-center">
+        <div  *ngFor="let movie of searchResult.results;let i=index" class="col-md-2">
+          <app-movie  [movie]="movie"></app-movie>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

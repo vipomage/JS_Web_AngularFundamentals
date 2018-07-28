@@ -10,10 +10,17 @@ import { Movie } from "../schemas/movie";
 export class MoviesComponent implements OnInit {
   popular: Movie[];
   theaters: Movie[];
+  popularKids: Movie[];
+  bestDrama: Movie[];
+
   constructor(private movieService: MoviesService) {}
 
   ngOnInit() {
     this.movieService.getPopular().subscribe(data => (this.popular = data));
     this.movieService.getTheaters().subscribe(data => (this.theaters = data));
+    this.movieService.getBestDrama().subscribe(data => (this.bestDrama = data));
+    this.movieService
+      .getPopularKids()
+      .subscribe(data => (this.popularKids = data));
   }
 }

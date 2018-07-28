@@ -1,0 +1,21 @@
+
+h3{
+  text-align: center;
+  }
+@media screen and (min-device-width: 768px){
+  body > app-root > app-details > div > div > div.panel-body > div > div.col-md-5 > img{
+    margin: 0!important;
+    padding: 0!important;
+    }
+  div.row{
+    margin-left: 0px;
+    margin-right: 0px;
+    }
+  img {
+    margin: 0 5px 0 20px;
+    width: 100%;
+    }
+  .panel-body {
+    margin: 45px 20px 20px 0;
+    }
+  }

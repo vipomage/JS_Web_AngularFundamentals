@@ -1,6 +1,7 @@
 <div class="movie-item">
   <img *ngIf="movie.poster_path" class="thumbnail" src="http://image.tmdb.org/t/p/w500/{{movie.poster_path}}">
+  <img *ngIf="!movie.poster_path" class="thumbnail" src="https://vignette.wikia.nocookie.net/dancewithdevils/images/3/38/NoPicture.jpeg/revision/latest?cb=20160221232512">
   <h4>{{movie.title}}</h4>
   <p>{{movie.release_date}}</p>
-  <p><a class="btn btn-default" href="#">View Details</a></p>
+  <p><a class="btn btn-default" routerLink="details/{{movie.id}}">View Details</a></p>
 </div>
