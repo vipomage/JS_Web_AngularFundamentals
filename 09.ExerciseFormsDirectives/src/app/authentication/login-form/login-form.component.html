@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Login Form</h1>
+  <div *ngIf="message">
+    <div *ngIf="error" class="alert alert-warning">{{message.error}}</div>
+    <div *ngIf="success" class="alert alert-success">Successful Login</div>
+  </div>
+  <form  [formGroup]="form" (ngSubmit)="login()">
+    <div class="form-group">
+      <div *ngIf="form.controls.username.errors && !form.controls.username.untouched">
+        <div class="alert alert-warning" *ngIf="form.controls.username.errors.required ">Username is Required</div>
+        <div class="alert alert-warning" *ngIf="form.controls.username.errors.pattern ">Username must start with capital and
+          formed by alphanumerics
+        </div>
+        <div class="alert alert-warning" *ngIf="form.controls.username.errors.minlength ">Username must be at least 3 characters
+        </div>
+        <div class="alert alert-warning" *ngIf="form.controls.username.errors.maxlength ">Username must be maximum of 10
+          characters
+        </div>
+      </div>
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username"
+             required formControlName="username" [pattern]="patterns.username">
+    </div>
+    <div class="form-group">
+      <div *ngIf="form.controls.password.errors && !form.controls.password.untouched">
+        <div class="alert alert-warning" *ngIf="form.controls.password.errors.required ">Password is Required</div>
+        <div class="alert alert-warning" *ngIf="form.controls.password.errors.pattern ">Password must be alphanumerics only between 4 and 16
+          characters
+        </div>
+      </div>
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password"
+             required formControlName="password" [pattern]="patterns.password">
+    </div>
+    <button [disabled]="form.invalid" type="submit" class="btn btn-success">Login</button>
+  </form>
+</div>

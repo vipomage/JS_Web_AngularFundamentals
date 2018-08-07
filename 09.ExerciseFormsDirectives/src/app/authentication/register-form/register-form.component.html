@@ -1,0 +1,95 @@
+<div class="container">
+  <h1>Registration Form</h1>
+  <form [formGroup]="form" (ngSubmit)="register()">
+    <div class="form-group username">
+
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username"
+             required formControlName="username" [pattern]="patterns.username">
+      <div *ngIf="form.controls.username.errors && !form.controls.username.untouched">
+        <div class="alert alert-warning" *ngIf="form.controls.username.errors.required ">Username is Required</div>
+        <div class="alert alert-warning" *ngIf="form.controls.username.errors.pattern ">Username must start with capital and
+          formed by alphanumerics
+        </div>
+        <div class="alert alert-warning" *ngIf="form.controls.username.errors.minlength ">Username must be at least 3 characters
+        </div>
+        <div class="alert alert-warning" *ngIf="form.controls.username.errors.maxlength ">Username must be maximum of 10
+          characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group password">
+
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password"
+             required formControlName="password" [pattern]="patterns.password">
+      <div *ngIf="form.controls.password.errors && !form.controls.password.untouched">
+        <div class="alert alert-warning" *ngIf="form.controls.password.errors.required ">Password is Required</div>
+        <div class="alert alert-warning" *ngIf="form.controls.password.errors.pattern ">Password must be alphanumerics only
+          between 4 and 16
+          characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group confirm-password">
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" class="form-control" id="confirmPassword"
+             required formControlName="confirmPassword" [pattern]="patterns.password">
+      <div
+        *ngIf="form.controls.confirmPassword.errors && !form.controls.confirmPassword.untouched || form.controls.confirmPassword.value !== form.controls.password.value ">
+        <div class="alert alert-warning" *ngIf="form.controls.confirmPassword.errors?.required ">Password is Required</div>
+        <div class="alert alert-warning" *ngIf="form.controls.confirmPassword.errors?.pattern ">Password must be alphanumerics
+          only between 4 and
+          16
+          characters
+        </div>
+        <div class="alert alert-warning" *ngIf="form.controls.confirmPassword.value !== form.controls.password.value ">Passwords
+          must match!
+        </div>
+      </div>
+    </div>
+    <div class="form-group first-name">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName"
+             required formControlName="firstName" [pattern]="patterns.name">
+      <div *ngIf="form.controls.firstName.errors && !form.controls.firstName.untouched">
+        <div class="alert alert-warning" *ngIf="form.controls.firstName.errors.required ">First name is Required</div>
+        <div class="alert alert-warning" *ngIf="form.controls.firstName.errors.pattern ">First name must start with capital
+          letter
+        </div>
+      </div>
+
+    </div>
+    <div class="form-group last-name">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName"
+             required formControlName="lastName" [pattern]="patterns.name">
+      <div *ngIf="form.controls.lastName.errors && !form.controls.lastName.untouched">
+        <div class="alert alert-warning" *ngIf="form.controls.lastName.errors.required ">Last name is Required</div>
+        <div class="alert alert-warning" *ngIf="form.controls.lastName.errors.pattern ">Last name must start with capital letter
+        </div>
+      </div>
+
+    </div>
+    <div class="form-group email">
+      <label for="email">Email Address</label>
+      <input type="text" class="form-control" [pattern]="patterns.email" id="email"
+             required formControlName="email">
+      <div *ngIf="form.controls.email.errors && !form.controls.email.untouched">
+        <div class="alert alert-warning" *ngIf="form.controls.email.errors.pattern">Invalid E-mail</div>
+      </div>
+
+    </div>
+    <div class="form-group age">
+      <label for="age">Age</label>
+      <input type="number" class="form-control" id="age" formControlName="age">
+    </div>
+
+    <button [(disabled)]="form.invalid || form.value.password !== form.value.confirmPassword" type="submit"
+            class="btn btn-success">Register
+    </button>
+    <!--<button type="submit" class="btn btn-warning">DEBUG</button>-->
+
+  </form>
+</div>
