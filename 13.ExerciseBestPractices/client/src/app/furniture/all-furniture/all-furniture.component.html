@@ -19,6 +19,8 @@
             <cite title="Source Title">{{f.title}}</cite>
             <div class="pull-right">
               <a routerLink="../details/{{f.id}}" class="btn btn-info">Details</a>
+              <a (click)="deleteItem(f.id)" *ngIf="authService.isAdmin()"  class="btn btn-danger">Delete</a>
+              <a routerLink="/furniture/edit/{{f.id}}" *ngIf="authService.isAdmin()" class="btn btn-warning">Edit</a>
             </div>
           </blockquote>
         </div>

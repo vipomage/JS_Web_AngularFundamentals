@@ -9,13 +9,13 @@ export interface CreateFurnitureModel {
 }
 export class FurnitureModel {
   constructor(
-    private id: number,
-    private make: string,
-    private model: string,
-    private year: number,
-    private description: string,
-    private price: number,
-    private image: string,
-    private createdBy: string
+    public id: string,
+    public make: string,
+    public model: string,
+    public year: number,
+    public description: string,
+    public price: number,
+    public image: string,
+    public createdBy: string
   ) {}
 }

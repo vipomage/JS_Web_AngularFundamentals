@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FurnitureService } from "../furniture.service";
 import { FurnitureModel } from "../models";
 import { Observable } from "rxjs";
+import { AuthService } from "../../authentication/auth.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-all-furniture",
@@ -14,11 +16,21 @@ export class AllFurnitureComponent implements OnInit {
   currentPage: number = 1;
 
   constructor(
-    private furnitureService: FurnitureService) {}
+    private furnitureService: FurnitureService,
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.furnitures = this.furnitureService.getAllFurniture();
   }
+
+  deleteItem = (id: string) => {
+    this.furnitureService.deleteFurniture(id).subscribe(() => {
+      this.furnitures = this.furnitureService.getAllFurniture();
+      this.toastr.success("Successfull Delete", "Item Deleted!");
+    });
+  };
 
   changePage = page => {
     this.currentPage = page;
