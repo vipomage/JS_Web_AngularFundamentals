@@ -12,10 +12,8 @@ const furnitureRoutes: Routes = [
   { path: "create", component: CreateFurnitureComponent }
 ];
 
-
 @NgModule({
-  imports:[RouterModule.forChild(furnitureRoutes)],
-  exports:[RouterModule]
+  imports: [RouterModule.forChild(furnitureRoutes)],
+  exports: [RouterModule]
 })
-
-export class FurnitureRoutingModule{}
+export class FurnitureRoutingModule {}

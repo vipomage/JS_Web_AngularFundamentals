@@ -6,8 +6,9 @@ import {
   HttpInterceptor
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+
+import {Observable} from "rxjs";
+import {tap} from "rxjs/operators";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 
@@ -61,7 +62,8 @@ export class JwtInterceptor implements HttpInterceptor {
       "currentUser",
       JSON.stringify({
         username: data.user.name,
-        token: data.token
+        token: data.token,
+        isAdmin:data.user.isAdmin
       })
     );
   };

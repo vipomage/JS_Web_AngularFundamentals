@@ -10,10 +10,17 @@ import { Observable } from "rxjs";
 })
 export class AllFurnitureComponent implements OnInit {
   furnitures: Observable<FurnitureModel[]>;
+  pageSize: number = 3;
+  currentPage: number = 1;
 
-  constructor(private furnitureService: FurnitureService) {}
+  constructor(
+    private furnitureService: FurnitureService) {}
 
   ngOnInit() {
     this.furnitures = this.furnitureService.getAllFurniture();
   }
+
+  changePage = page => {
+    this.currentPage = page;
+  };
 }
