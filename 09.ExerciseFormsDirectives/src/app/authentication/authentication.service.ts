@@ -14,8 +14,6 @@ export class AuthenticationService {
   private loginUrl = `https://baas.kinvey.com/user/${this.appKey}/login`;
   private logoutUrl = `https://baas.kinvey.com/user/${this.appKey}/_logout`;
   private currentAuthtoken;
-
-
   private createAuthHeaders(type: string): HttpHeaders {
     if (type === "Basic") {
       return new HttpHeaders({
