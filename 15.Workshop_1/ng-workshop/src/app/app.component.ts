@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
+
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDzOqlEGCG1NS4yT__4LtYaBjPJTIoH7MI",
   authDomain: "angularworkshop1.firebaseapp.com",

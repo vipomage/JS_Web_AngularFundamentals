@@ -1,5 +1,6 @@
+import "firebase/auth";
+import * as firebase from "firebase/app";
 import { Injectable } from "@angular/core";
-import * as firebase from "firebase";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 
@@ -49,7 +50,7 @@ export class AuthService {
       .currentUser.getIdToken()
       .then((token: string) => {
         this.token = token;
-        return this.token;
+        return token;
       })
       .catch(e => {
         console.log(e);
@@ -64,8 +65,7 @@ export class AuthService {
       .auth()
       .signOut()
       .then(() => {
-        this.router.navigate(["/auth/signin"])
-          .then(() => (this.token = null));
+        this.router.navigate(["/auth/signin"]).then(() => (this.token = null));
       });
   };
 }
