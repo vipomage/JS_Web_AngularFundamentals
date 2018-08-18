@@ -1,0 +1,22 @@
+.sign-in .button {
+  width: fit-content;
+  margin: 50px auto 0;
+  background-color: #4485f2;
+  color: #ffffff;
+  padding: 26px;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+.sign-in button:enabled {
+  background-color: #4485f2;
+  color: white;
+}
+#email {
+  text-transform: lowercase;
+}
