@@ -6,40 +6,42 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 
+import { environment } from "../environments/environment";
+import { AngularFireModule } from "angularfire2";
+import { AngularFirestoreModule } from "angularfire2/firestore";
+import { AngularFireStorageModule } from "angularfire2/storage";
+import { AngularFireAuthModule } from "angularfire2/auth";
+
 import { AppComponent } from "./app.component";
 import { SigninComponent } from "./auth/signin/signin.component";
 import { HeaderComponent } from "./header/header.component";
-import { RecipeCreateComponent } from "./recipe/recipe-create/recipe-create.component";
-import { RecipeDetailsComponent } from "./recipe/recipe-details/recipe-details.component";
-import { RecipeEditComponent } from "./recipe/recipe-edit/recipe-edit.component";
-import { RecipeListComponent } from "./recipe/recipe-list/recipe-list.component";
-import { RecipeStartComponent } from "./recipe/recipe-start/recipe-start.component";
 import { SignupComponent } from "./auth/signup/signup.component";
 import { ImageUploadComponent } from "./pictures/image-upload/image-upload.component";
 import { ImageDetailsComponent } from "./pictures/image-details/image-details.component";
 import { ImageEditComponent } from "./pictures/image-edit/image-edit.component";
 import { ImageListComponent } from "./pictures/image-list/image-list.component";
-import { WelcomeComponent } from './welcome/welcome.component';
+import { WelcomeComponent } from "./welcome/welcome.component";
+import { DropZoneDirective } from './drop-zone.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     HeaderComponent,
-    RecipeCreateComponent,
-    RecipeDetailsComponent,
-    RecipeEditComponent,
-    RecipeListComponent,
-    RecipeStartComponent,
     SignupComponent,
     ImageUploadComponent,
     ImageDetailsComponent,
     ImageEditComponent,
     ImageListComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    DropZoneDirective
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     FormsModule,
@@ -47,6 +49,6 @@ import { WelcomeComponent } from './welcome/welcome.component';
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

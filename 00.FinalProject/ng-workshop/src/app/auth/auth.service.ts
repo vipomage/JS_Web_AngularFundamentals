@@ -7,9 +7,11 @@ import { Router } from "@angular/router";
   providedIn: "root"
 })
 export class AuthService {
-  token: string;
+  public token: string;
 
   constructor(private toastr: ToastrService, private router: Router) {}
+
+  private GOOGLE_PROVIDER = new firebase.auth.GoogleAuthProvider();
 
   signUp = (email: string, password: string) => {
     firebase
@@ -36,7 +38,7 @@ export class AuthService {
   googleOAuth = () => {
     firebase
       .auth()
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .signInWithPopup(this.GOOGLE_PROVIDER)
       .then(() => this.authHandler("/welcome"));
   };
 
