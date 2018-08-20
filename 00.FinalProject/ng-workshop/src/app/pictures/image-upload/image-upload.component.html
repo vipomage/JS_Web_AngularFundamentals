@@ -4,10 +4,7 @@
      (dropped)="startUpload($event)"
      [class.hovering]="isHovering">
 
-
-
   <h3>AngularFire Drop Zone</h3>
-
   <div class="file">
     <label class="file-label">
 
@@ -27,7 +24,6 @@
   </div>
 </div>
 <div *ngIf="percentage | async as pct">
-
   <progress class="progress is-info"
             [value]="pct"
             max="100">

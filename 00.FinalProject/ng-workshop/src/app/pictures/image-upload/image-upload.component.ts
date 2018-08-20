@@ -10,6 +10,7 @@ import { Observable } from "rxjs";
 import { AngularFirestore } from "angularfire2/firestore";
 import { AuthService } from "../../auth/auth.service";
 import { ToastrService } from "ngx-toastr";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "image-upload",
@@ -27,7 +28,8 @@ export class ImageUploadComponent implements OnInit {
     private storage: AngularFireStorage,
     private db: AngularFirestore,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   toggleHover(event: boolean) {
@@ -74,7 +76,9 @@ export class ImageUploadComponent implements OnInit {
       .ref(`userCollections/${uid}`)
       .push(imageUrl)
       .then(() => {
-        this.toastr.success("Image upload Success");
+        this.router.navigate(["/pictures/list"]).then(() => {
+          this.toastr.success("Image upload Success");
+        });
       });
   };
 
