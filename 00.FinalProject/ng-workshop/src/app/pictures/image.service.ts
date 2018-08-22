@@ -21,12 +21,26 @@ export class ImageService {
   uid = this.authService.getCurrentUser().uid;
   collection = [];
 
+
+  ////Returns Array[Object]
+
+  // getCollection = () => {
+  //   firebase
+  //     .database()
+  //     .ref(`userCollections/` + this.uid)
+  //     .on("value", data => {
+  //       let parsed = Object.values(data.val());
+  //       this.collection = parsed;
+  //     });
+  // };
+
+  //Returns Object[Object]
   getCollection = () => {
     firebase
       .database()
       .ref(`userCollections/` + this.uid)
       .on("value", data => {
-        let parsed = Object.values(data.val());
+        let parsed = data.val();
         this.collection = parsed;
       });
   };
@@ -42,10 +56,14 @@ export class ImageService {
     let formData: FormData = new FormData();
     formData.append("image", file, new Date().getDate().toString());
 
-    let headers = new HttpHeaders({
-      "Api-Key": KEY
-    });
+    let headers = new HttpHeaders();
+    headers.set("Api-Key", KEY);
 
-    return this.http.post(API, formData, headers);
+    return this.http.post(API, formData, { headers: headers });
+  };
+
+  getImage = imageId =>{
+    return firebase.database().ref(`userCollections/${this.uid}/${imageId}`).once('value');
+
   };
 }

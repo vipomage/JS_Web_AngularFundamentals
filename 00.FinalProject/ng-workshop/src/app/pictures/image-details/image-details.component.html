@@ -1,3 +1,10 @@
-<p>
-  image-details works!
-</p>
+<img src="{{object}}" alt="">
+<div class="container">
+  <div class="wrapper">
+    <h3>Owner : {{object.owner}}</h3>
+  </div>
+  <p>Uploaded on: {{object.uploadedOn}}</p>
+
+  <a routerLink="/pictures/edit/{{imageId}}" class="btn btn-warning">Edit</a>
+  <button class="btn btn-danger">Delete</button>
+</div>

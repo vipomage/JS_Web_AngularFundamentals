@@ -22,6 +22,7 @@ import { ImageEditComponent } from "./pictures/image-edit/image-edit.component";
 import { ImageListComponent } from "./pictures/image-list/image-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
 import { DropZoneDirective } from "./drop-zone.directive";
+import { keyValueFilterPipe } from './key-value-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DropZoneDirective } from "./drop-zone.directive";
     ImageEditComponent,
     ImageListComponent,
     WelcomeComponent,
-    DropZoneDirective
+    DropZoneDirective,
+    keyValueFilterPipe
   ],
   imports: [
     BrowserModule,

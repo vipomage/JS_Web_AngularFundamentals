@@ -1,9 +1,9 @@
 <div *ngIf="collection" class="container">
-  <div *ngFor="let imageUrl of collection" class="gallery">
-    <a href="/pictures/details">
-      <img src="{{imageUrl}}" width="300" height="200">
-      <a  href="{{imageUrl}}"><i class="fa fa-download"></i> Download</a>
-    </a>
+  <div *ngFor="let imageUrl of collection | keyValueFilter" class="gallery">
+    <a routerLink="/pictures/details/{{imageUrl.key}}">
+      <img src="{{imageUrl.value}}" width="300" height="200">
+      </a>
+    <a target="_blank" href="{{imageUrl.value}}"><i class="fa fa-download"></i> Download</a>
   </div>
 </div>
 
