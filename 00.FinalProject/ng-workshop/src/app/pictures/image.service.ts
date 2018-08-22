@@ -1,34 +1,51 @@
 import { Injectable } from "@angular/core";
 import * as firebase from "firebase/app";
 import { AuthService } from "../auth/auth.service";
+import {
+  HttpClientModule,
+  HttpHeaders,
+  HttpClient
+} from "@angular/common/http";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable({
   providedIn: "root"
 })
 export class ImageService {
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient,
+    private toastr: ToastrService
   ) {}
 
   uid = this.authService.getCurrentUser().uid;
-
   collection = [];
 
-  getCollection = () =>
+  getCollection = () => {
     firebase
       .database()
       .ref(`userCollections/` + this.uid)
       .on("value", data => {
         let parsed = Object.values(data.val());
-        this.collection = parsed
+        this.collection = parsed;
       });
+  };
 
-  // insertInCollection = (imageUrl: string) => {
-  //   this.collection.push(imageUrl);
-  // };
+  colorizeLocalImg = file => {
+    this.toastr.info("Image Processing", "Please Wait", {
+      progressAnimation: "decreasing",
+      timeOut: 10000
+    });
+    const API = "https://api.deepai.org/api/colorizer";
+    const KEY = "7bebdcf9-76f0-4dfa-bc77-2361935e6ea7";
 
-  updateDbCollection = () => {
-    let uid = this.authService.getCurrentUser().uid;
-    firebase.database().ref(`${uid}`);
+    let formData: FormData = new FormData();
+    formData.append("image", file, new Date().getDate().toString());
+
+    let headers = new HttpHeaders({
+      "Api-Key": KEY
+    });
+
+    return this.http.post(API, formData, headers);
   };
 }

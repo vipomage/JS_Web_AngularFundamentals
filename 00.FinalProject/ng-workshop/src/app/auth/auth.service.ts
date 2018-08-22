@@ -7,10 +7,9 @@ import { Router } from "@angular/router";
   providedIn: "root"
 })
 export class AuthService {
-  public token: string;
-
   constructor(private toastr: ToastrService, private router: Router) {}
 
+  public token: string;
   private GOOGLE_PROVIDER = new firebase.auth.GoogleAuthProvider();
 
   signUp = (email: string, password: string) => {
@@ -19,7 +18,7 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.router.navigate(["/auth/signin"]).then(() => {
-          this.toastr.success("Successful Registration", "Success");
+          this.toastr.success("Successful Registration");
         });
       })
       .catch(e => {

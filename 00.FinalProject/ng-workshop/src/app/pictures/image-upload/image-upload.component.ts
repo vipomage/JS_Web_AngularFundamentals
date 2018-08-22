@@ -11,6 +11,7 @@ import { AngularFirestore } from "angularfire2/firestore";
 import { AuthService } from "../../auth/auth.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
+import { ImageService } from "../image.service";
 
 @Component({
   selector: "image-upload",
@@ -23,13 +24,15 @@ export class ImageUploadComponent implements OnInit {
   snapshot: Observable<any>;
   downloadURL: string;
   isHovering: boolean;
-
+  uid: string = this.authService.getCurrentUser().uid;
+  url: string;
   constructor(
     private storage: AngularFireStorage,
     private db: AngularFirestore,
     private authService: AuthService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private imgService: ImageService
   ) {}
 
   toggleHover(event: boolean) {
@@ -46,34 +49,38 @@ export class ImageUploadComponent implements OnInit {
       return;
     }
 
-    const uid = this.authService.getCurrentUser().uid;
     // The storage path
     const date = new Date().getTime();
-    const path = `${uid}/${date}_${file.name}`;
+    const path = `${this.uid}/${date}_${file.name}`;
 
-    // The main task
-    this.task = this.storage.upload(path, file);
-
-    this.task.then(data => {
-      const UID = this.authService.getCurrentUser().uid;
-
-      data.ref.getDownloadURL().then(imgUrl => {
-        this.downloadURL = imgUrl;
-        this.uploadToDB(UID, imgUrl);
-      });
-    });
+    // Upload To StorageAsFile
+    // this.task = this.storage.upload(path, file);
+    //
+    // this.task.then(data => {
+    //   const UID = this.authService.getCurrentUser().uid;
+    //
+    //   data.ref.getDownloadURL().then(imgUrl => {
+    //     this.downloadURL = imgUrl;
+    //     this.uploadToDB(UID, imgUrl);
+    //   });
+    // });
 
     // Progress monitoring
-    this.percentage = this.task.percentageChanges();
-    this.snapshot = this.task.snapshotChanges();
+    // this.percentage = this.task.percentageChanges();
+    // this.snapshot = this.task.snapshotChanges();
 
-    // The file's download URL
+    //MAIN
+
+    this.imgService.colorizeLocalImg(file).subscribe(convertedImg => {
+      let processed = convertedImg["output_url"];
+      this.uploadToDB(processed);
+    });
   }
 
-  uploadToDB = (uid: string, imageUrl) => {
+  uploadToDB = imageUrl => {
     firebase
       .database()
-      .ref(`userCollections/${uid}`)
+      .ref(`userCollections/${this.uid}`)
       .push(imageUrl)
       .then(() => {
         this.router.navigate(["/pictures/list"]).then(() => {
@@ -88,6 +95,19 @@ export class ImageUploadComponent implements OnInit {
       snapshot.bytesTransferred < snapshot.totalBytes
     );
   }
+
+  uploadUserToDb = (user, uid) => {
+    let obj = {};
+    obj[uid] = user;
+    firebase
+      .database()
+      .ref("users")
+      .update(obj)
+      .then(() => {
+        // User Add Success
+      })
+      .catch(e => console.log(e.message));
+  };
 
   ngOnInit() {}
 }

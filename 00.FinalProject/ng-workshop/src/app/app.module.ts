@@ -21,7 +21,7 @@ import { ImageDetailsComponent } from "./pictures/image-details/image-details.co
 import { ImageEditComponent } from "./pictures/image-edit/image-edit.component";
 import { ImageListComponent } from "./pictures/image-list/image-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
-import { DropZoneDirective } from './drop-zone.directive';
+import { DropZoneDirective } from "./drop-zone.directive";
 
 @NgModule({
   declarations: [
@@ -49,6 +49,6 @@ import { DropZoneDirective } from './drop-zone.directive';
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

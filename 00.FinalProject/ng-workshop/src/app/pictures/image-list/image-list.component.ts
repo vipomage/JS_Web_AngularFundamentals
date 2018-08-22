@@ -7,12 +7,9 @@ import { ImageService } from "../image.service";
   styleUrls: ["./image-list.component.css"]
 })
 export class ImageListComponent implements OnInit {
-
   public collection = this.imgService.collection;
 
   constructor(private imgService: ImageService) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 }

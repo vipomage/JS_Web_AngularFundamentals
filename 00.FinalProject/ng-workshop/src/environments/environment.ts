@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebase:{
+  firebase: {
     apiKey: "AIzaSyCk-WThkSMKQLEPpetFLDPwJXW_dAmnjvg",
     authDomain: "colorize-a9b46.firebaseapp.com",
     storageBucket: "colorize-a9b46.appspot.com",
