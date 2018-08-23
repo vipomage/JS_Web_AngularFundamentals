@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import * as firebase from "firebase/app";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
-import {DatabaseReference} from "angularfire2/database/interfaces";
+import { DatabaseReference } from "angularfire2/database/interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -56,7 +56,7 @@ export class AuthService {
       });
   };
 
-  uploadUserToDb = ():void => {
+  uploadUserToDb = (): void => {
     let currentUser = firebase.auth().currentUser;
     this.currentUser = currentUser;
     let uid = currentUser.uid;
@@ -84,7 +84,7 @@ export class AuthService {
 
   redirect = (url: string) => this.router.navigate([url]);
 
-  logout = () :void=> {
+  logout = (): void => {
     firebase
       .auth()
       .signOut()
@@ -100,5 +100,6 @@ export class AuthService {
 
   isAuthenticated = () => !!this.token;
 
-  retrieveUser = ():DatabaseReference => firebase.database().ref(`users/${this.currentUser.uid}`);
+  retrieveUser = (): DatabaseReference =>
+    firebase.database().ref(`users/${this.currentUser.uid}`);
 }

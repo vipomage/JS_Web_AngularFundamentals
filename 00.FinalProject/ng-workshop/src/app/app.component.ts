@@ -10,12 +10,9 @@ import { fadeAnimation } from "./fade.animations";
   animations: [fadeAnimation]
 })
 export class AppComponent implements OnInit {
-  constructor(
-
-  ) {}
+  constructor() {}
 
   title = "Colorize Me";
-  user ;
   getState = outlet => (outlet.isActivated ? outlet.activatedRoute : "");
 
   ngOnInit(): void {

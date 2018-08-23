@@ -25,7 +25,7 @@ import { DropZoneDirective } from "./drop-zone.directive";
 import { keyValueFilterPipe } from "./key-value-filter.pipe";
 import { ImageDeleteComponent } from "./pictures/image-delete/image-delete.component";
 import { ImageConvertComponent } from "./pictures/image-converter/image-converter.component";
-import { PublicImagesComponent } from './pictures/public-images/public-images.component';
+import { PublicImagesComponent } from "./pictures/public-images/public-images.component";
 
 @NgModule({
   declarations: [
