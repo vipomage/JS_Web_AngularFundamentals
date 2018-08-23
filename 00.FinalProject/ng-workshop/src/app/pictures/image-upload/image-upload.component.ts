@@ -11,7 +11,6 @@ import { AngularFirestore } from "angularfire2/firestore";
 import { AuthService } from "../../auth/auth.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
-import { ImageService } from "../image.service";
 
 @Component({
   selector: "image-upload",
@@ -26,13 +25,13 @@ export class ImageUploadComponent implements OnInit {
   isHovering: boolean;
   uid: string = this.authService.getCurrentUser().uid;
   url: string;
+
   constructor(
     private storage: AngularFireStorage,
     private db: AngularFirestore,
     private authService: AuthService,
     private toastr: ToastrService,
-    private router: Router,
-    private imgService: ImageService
+    private router: Router
   ) {}
 
   toggleHover(event: boolean) {
@@ -43,9 +42,9 @@ export class ImageUploadComponent implements OnInit {
     // The File object
     const file = event.item(0);
 
-    // Client-side validation example
+    // Client-side validation
     if (file.type.split("/")[0] !== "image") {
-      console.error("unsupported file type :( ");
+      this.toastr.error("unsupported file type :( ");
       return;
     }
 
@@ -56,6 +55,7 @@ export class ImageUploadComponent implements OnInit {
     //Upload To StorageAsFile
     this.task = this.storage.upload(path, file);
 
+    //Get link to uploaded file and upload it userCollection in DB
     this.task.then(data => {
       data.ref.getDownloadURL().then(imgUrl => {
         this.downloadURL = imgUrl;
@@ -66,15 +66,9 @@ export class ImageUploadComponent implements OnInit {
     //Progress monitoring
     this.percentage = this.task.percentageChanges();
     this.snapshot = this.task.snapshotChanges();
-
-    //MAIN Colorization
-
-    // this.imgService.colorizeLocalImg(file).subscribe(convertedImg => {
-    //   let processed = convertedImg["output_url"];
-    //   this.uploadToDB(processed);
-    // });
   }
 
+  // Fn which uploads an image URL to userCollection in DB
   uploadToDB = imageUrl => {
     let dbRef = firebase.database().ref(`userCollections/${this.uid}`);
     let key = dbRef.push().key;
@@ -97,13 +91,7 @@ export class ImageUploadComponent implements OnInit {
       });
   };
 
-  isActive(snapshot) {
-    return (
-      snapshot.state === "running" &&
-      snapshot.bytesTransferred < snapshot.totalBytes
-    );
-  }
-
+  //Fn which uploads user to users collection in DB
   uploadUserToDb = (user, uid) => {
     let obj = {};
     obj[uid] = user;

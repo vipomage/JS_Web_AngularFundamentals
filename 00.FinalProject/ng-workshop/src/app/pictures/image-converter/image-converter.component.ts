@@ -12,6 +12,7 @@ import { AuthService } from "../../auth/auth.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { ImageService } from "../image.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "image-convert",
@@ -26,26 +27,28 @@ export class ImageConvertComponent implements OnInit {
   isHovering: boolean;
   uid: string = this.authService.getCurrentUser().uid;
   url: string;
+
   constructor(
     private storage: AngularFireStorage,
     private db: AngularFirestore,
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
-    private imgService: ImageService
+    private imgService: ImageService,
+    private http: HttpClient
   ) {}
 
   toggleHover(event: boolean) {
     this.isHovering = event;
   }
-
+  //Fn Triggered on file select/drop
   startUpload(event: FileList) {
     // The File object
     const file = event.item(0);
 
-    // Client-side validation example
+    // Client-side validation for images
     if (file.type.split("/")[0] !== "image") {
-      console.error("unsupported file type :( ");
+      this.toastr.error('unsupported file type :(');
       return;
     }
 
@@ -53,31 +56,32 @@ export class ImageConvertComponent implements OnInit {
     const date = new Date().getTime();
     const path = `${this.uid}/${date}_${file.name}`;
 
-    // Upload To StorageAsFile
-    // this.task = this.storage.upload(path, file);
+    //Send the image to Colouring API and then saves it to Firebase Storage ->
+    //Gets link and adds it to firebase database
     //
-    // this.task.then(data => {
-    //   const UID = this.authService.getCurrentUser().uid;
-    //
-    //   data.ref.getDownloadURL().then(imgUrl => {
-    //     this.downloadURL = imgUrl;
-    //     this.uploadToDB(UID, imgUrl);
-    //   });
-    // });
+    //Reason being the Colouring-API image links results in painfully slow loading of images
+    //Firebase is Fast!
+    this.imgService.colorizeLocalImg(file).subscribe(convertedImg => {
+      let imageUrl = convertedImg["output_url"]; //converted Image URL
+      //get image as blob
+      this.http.get(imageUrl, { responseType: "blob" }).subscribe(data => {
+        //upload to Storage
+        this.task = this.storage.upload(path, data);
+        //get Link to uploaded img and add to DB for listing
+        this.task.then(data => {
+          data.ref.getDownloadURL().then(imgUrl => {
+            this.downloadURL = imgUrl;
+            this.uploadToDB(imgUrl);
+          });
+        });
 
-    // Progress monitoring
-    // this.percentage = this.task.percentageChanges();
-    // this.snapshot = this.task.snapshotChanges();
-
-    //MAIN
-
-    this.imgService.colorizeLocalImg(file)
-      .subscribe(convertedImg => {
-      let processed = convertedImg["output_url"];
-      this.uploadToDB(processed);
+        this.percentage = this.task.percentageChanges();
+        this.snapshot = this.task.snapshotChanges();
+      });
     });
   }
 
+  // Fn which uploads an image URL to userCollection in DB
   uploadToDB = imageUrl => {
     let dbRef = firebase.database().ref(`userCollections/${this.uid}`);
     let key = dbRef.push().key;
@@ -100,13 +104,7 @@ export class ImageConvertComponent implements OnInit {
       });
   };
 
-  isActive(snapshot) {
-    return (
-      snapshot.state === "running" &&
-      snapshot.bytesTransferred < snapshot.totalBytes
-    );
-  }
-
+  //Fn which uploads user to users collection in DB
   uploadUserToDb = (user, uid) => {
     let obj = {};
     obj[uid] = user;

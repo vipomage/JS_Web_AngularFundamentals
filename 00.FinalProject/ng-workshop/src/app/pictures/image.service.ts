@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import * as firebase from "firebase/app";
 import { AuthService } from "../auth/auth.service";
 import {
-  HttpClientModule,
   HttpHeaders,
   HttpClient
 } from "@angular/common/http";
@@ -21,8 +20,8 @@ export class ImageService {
   uid = this.authService.getCurrentUser().uid;
   collection = [];
 
-  ////Returns Array[Object]
-
+  //Returns Array[Object]
+  //Get User images
   getCollection = () => {
     return firebase
       .database()
@@ -30,6 +29,7 @@ export class ImageService {
   };
 
   //Returns Object[Object]
+  //Get User images
   // getCollection = () => {
   //   firebase
   //     .database()
@@ -40,6 +40,7 @@ export class ImageService {
   //     });
   // };
 
+  //Fn which calls Colouring API and returns URL to converted Image
   colorizeLocalImg = file => {
     this.toastr.info("Image Processing", "Please Wait", {
       progressAnimation: "decreasing",
@@ -57,12 +58,15 @@ export class ImageService {
     return this.http.post(API, formData, { headers: headers });
   };
 
+  //Get single image by ID
   getImage = imageId =>
     firebase
       .database()
       .ref(`userCollections/${this.uid}/${imageId}`)
       .once("value");
 
+
+  //Delete single image by ID
   deleteImage = imageId =>
     firebase.database().ref(`userCollections/${this.uid}/${imageId}`);
 }
