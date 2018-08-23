@@ -4,7 +4,20 @@
     <h3>Owner : {{object.owner}}</h3>
     <p>Uploaded on: {{object.uploadedOn|date}}</p>
   </div>
-  <form #editForm="ngForm" (ngSubmit)="editPicture(editForm)">
+  <form #editForm="ngForm" (ngSubmit)="editImage(editForm)">
+    <div class="form-group">
+      <label for="dateTaken">Image capture date </label>
+      <input [(ngModel)]="dateTaken" name="dateTaken" id="dateTaken" type="date">
+    </div>
+    <div class="form-group">
+      <label class="container">
+      <input name="isPublic" type="checkbox" [(ngModel)]="isPublic"  data-md-icheck (change)="toggleVisibility($event)"/>
+      <span *ngIf="isPublic"> Public</span><span *ngIf="!isPublic"> Private</span>
+
+      <span class="checkmark"></span>
+      </label>
+    </div>
+    <button class="btn btn-warning" type="submit">Save</button>
   </form>
   <a routerLink="/pictures/delete/{{imageId}}" class="btn btn-danger">Delete</a>
 </div>

@@ -110,20 +110,6 @@ export class ImageConvertComponent implements OnInit {
       });
   };
 
-  //Fn which uploads user to users collection in DB
-  uploadUserToDb = (user, uid) => {
-    let obj = {};
-    obj[uid] = user;
-    firebase
-      .database()
-      .ref("users")
-      .update(obj)
-      .then(() => {
-        // User Add Success
-      })
-      .catch(e => console.log(e.message));
-  };
-
   disableFileUpload = () => {
     this.preventEdit = !this.preventEdit;
   };

@@ -14,8 +14,7 @@ export class ImageListComponent implements OnInit {
   ngOnInit() {
     this.imgService.getCollection().on("value", data => {
       if (data.val()) {
-        let parsed = Object.values(data.val());
-        this.collection = parsed;
+        this.collection = Object.values(data.val());
       }
     });
   }

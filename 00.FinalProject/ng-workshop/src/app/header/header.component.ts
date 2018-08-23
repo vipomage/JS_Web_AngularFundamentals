@@ -12,7 +12,10 @@ export class HeaderComponent implements OnInit {
   dropdownLi: string = "nav-item dropdown";
   dropdownMenu: string = "dropdown-menu";
 
-  ngOnInit() {}
+
+  ngOnInit() {
+
+  }
 
   expand = () => {
     this.dropdownLi.endsWith("show")

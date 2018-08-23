@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../../auth/auth.service";
 import { ActivatedRoute } from "@angular/router";
 import { ImageService } from "../image.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: "app-image-edit",
@@ -19,10 +20,22 @@ export class ImageEditComponent implements OnInit {
   imageId = this.route.snapshot.params.id;
   object = {};
 
+
+  isPublic:boolean = false;
+  dateTaken;
+
   getImage = () => {
     this.imgService.getImage(this.imageId).then(snap => {
       this.object = snap.val();
     });
+  };
+
+  editImage = (form:NgForm)=>{
+    console.log(form.value);
+  };
+
+  toggleVisibility = e =>{
+    this.isPublic = e.target.checked
   };
 
   ngOnInit() {

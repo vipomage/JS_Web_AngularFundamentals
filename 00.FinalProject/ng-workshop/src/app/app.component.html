@@ -1,4 +1,6 @@
 <app-header></app-header>
-<div [@fadeAnimation]="getState(o)" class="container">
-  <router-outlet #o="outlet"></router-outlet>
+<div class="host">
+  <div [@fadeAnimation]="getState(o)" class="container">
+    <router-outlet #o="outlet"></router-outlet>
+  </div>
 </div>

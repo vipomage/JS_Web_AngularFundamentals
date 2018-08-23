@@ -1,4 +1,10 @@
 <div class="container text-center">
   <h1>Welcome to {{title}}</h1>
+  <div *ngIf="user" class="wrapper">
+    <a *ngIf="user.isAdmin" class="btn-danger" routerLink="/admin/cp" routerLinkActive="active">Admin CP</a>
+  </div>
   <p>Personal image collection + old black and white images colorize </p>
+</div>
+<div class="public-images">
+  <app-public-images></app-public-images>
 </div>

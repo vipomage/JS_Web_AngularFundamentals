@@ -1,11 +1,16 @@
-div.container {
-}
-div.container div {
-  position: sticky;
-  margin: 0 auto;
-}
-/deep/ router-outlet ~ * {
+div.host {
+  display: flex;
+  overflow: hidden;
+  height: 85vh;
+  }
+
+div.host div {
+  flex: 1;
+  position: relative;
+  }
+
+/deep/ div.host router-outlet ~ * {
   position: absolute;
-  width: 60%;
-  margin: 0 auto;
-}
+  width: 100%;
+  height: 85vh;
+  }

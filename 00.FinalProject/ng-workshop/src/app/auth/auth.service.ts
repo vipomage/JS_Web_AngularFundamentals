@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import * as firebase from "firebase/app";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
+import {DatabaseReference} from "angularfire2/database/interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -11,6 +12,7 @@ export class AuthService {
 
   public token: string;
   private GOOGLE_PROVIDER = new firebase.auth.GoogleAuthProvider();
+  public currentUser;
 
   signUp = (email: string, password: string) => {
     firebase
@@ -42,6 +44,7 @@ export class AuthService {
   };
 
   authHandler = (redirectUrl: string) => {
+    this.uploadUserToDb();
     firebase
       .auth()
       .currentUser.getIdToken()
@@ -53,9 +56,35 @@ export class AuthService {
       });
   };
 
+  uploadUserToDb = ():void => {
+    let currentUser = firebase.auth().currentUser;
+    this.currentUser = currentUser;
+    let uid = currentUser.uid;
+    firebase
+      .database()
+      .ref(`users/${uid}`)
+      .once("value")
+      .then(user => {
+        if (!user.val()) {
+          let customUser = {
+            displayName: currentUser.displayName,
+            email: currentUser.email,
+            uid: currentUser.uid,
+            isAdmin: false
+          };
+          let obj = {};
+          obj[uid] = customUser;
+          firebase
+            .database()
+            .ref("users")
+            .update(obj);
+        }
+      });
+  };
+
   redirect = (url: string) => this.router.navigate([url]);
 
-  logout = () => {
+  logout = () :void=> {
     firebase
       .auth()
       .signOut()
@@ -67,21 +96,9 @@ export class AuthService {
       });
   };
 
-  getToken = () => {
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((token: string) => {
-        this.token = token;
-        return this.token;
-      })
-      .catch(e => {
-        console.log(e);
-        return e.message;
-      });
-  };
-
   getCurrentUser = () => firebase.auth().currentUser;
 
-  isAuthenticated = (): boolean => !!this.token;
+  isAuthenticated = () => !!this.token;
+
+  retrieveUser = ():DatabaseReference => firebase.database().ref(`users/${this.currentUser.uid}`);
 }
