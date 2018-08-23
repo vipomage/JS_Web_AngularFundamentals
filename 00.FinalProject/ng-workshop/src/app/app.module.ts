@@ -22,7 +22,9 @@ import { ImageEditComponent } from "./pictures/image-edit/image-edit.component";
 import { ImageListComponent } from "./pictures/image-list/image-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
 import { DropZoneDirective } from "./drop-zone.directive";
-import { keyValueFilterPipe } from './key-value-filter.pipe';
+import { keyValueFilterPipe } from "./key-value-filter.pipe";
+import { ImageDeleteComponent } from "./pictures/image-delete/image-delete.component";
+import { ImageConvertComponent } from "./pictures/image-converter/image-converter.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { keyValueFilterPipe } from './key-value-filter.pipe';
     ImageDetailsComponent,
     ImageEditComponent,
     ImageListComponent,
+    ImageConvertComponent,
     WelcomeComponent,
+    ImageDeleteComponent,
     DropZoneDirective,
     keyValueFilterPipe
   ],

@@ -1,10 +1,8 @@
-<img src="{{object}}" alt="">
-<div class="container">
+<div class="container text-center">
+  <img src="{{object.imageUrl}}" alt="">
   <div class="wrapper">
-    <h3>Owner : {{object.owner}}</h3>
+    <h5>Owner : {{object.owner}}</h5>
+    <p>Uploaded on: {{object.uploadedOn|date}}</p>
   </div>
-  <p>Uploaded on: {{object.uploadedOn}}</p>
-
   <a routerLink="/pictures/edit/{{imageId}}" class="btn btn-warning">Edit</a>
-  <button class="btn btn-danger">Delete</button>
 </div>

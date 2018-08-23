@@ -1,3 +1,10 @@
-<p>
-  image-edit works!
-</p>
+<img src="{{object.imageUrl}}" alt="">
+<div class="container">
+  <div class="wrapper">
+    <h3>Owner : {{object.owner}}</h3>
+    <p>Uploaded on: {{object.uploadedOn|date}}</p>
+  </div>
+  <form #editForm="ngForm" (ngSubmit)="editPicture(editForm)">
+  </form>
+  <a routerLink="/pictures/delete/{{imageId}}" class="btn btn-danger">Delete</a>
+</div>

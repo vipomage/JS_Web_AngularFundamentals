@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+button, .btn{
+  margin: 5px;
+  }
+img{
+  box-shadow: 3px -3px 9px 0px #0A0B0D;
+  }
+a:hover{
+  cursor: pointer;
+  }
+a{
+  color: white;
+  }

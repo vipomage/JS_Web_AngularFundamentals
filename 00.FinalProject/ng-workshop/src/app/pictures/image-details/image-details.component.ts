@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ImageService} from "../image.service";
 import {AuthService} from "../../auth/auth.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: "app-image-details",
@@ -12,7 +13,9 @@ export class ImageDetailsComponent implements OnInit {
   constructor(
     private route:ActivatedRoute,
     private imgService:ImageService,
-    private authService:AuthService
+    private authService:AuthService,
+    private toastr:ToastrService,
+    private router:Router
     ) {}
 
   user = this.authService.getCurrentUser();

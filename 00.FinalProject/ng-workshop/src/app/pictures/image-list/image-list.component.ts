@@ -7,9 +7,16 @@ import { ImageService } from "../image.service";
   styleUrls: ["./image-list.component.css"]
 })
 export class ImageListComponent implements OnInit {
-  public collection = this.imgService.collection;
+  public collection = [];
 
   constructor(private imgService: ImageService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.imgService.getCollection().on("value", data => {
+      if (data.val()) {
+        let parsed = Object.values(data.val());
+        this.collection = parsed;
+      }
+    });
+  }
 }

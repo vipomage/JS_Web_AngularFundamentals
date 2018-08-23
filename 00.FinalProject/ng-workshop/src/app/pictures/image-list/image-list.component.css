@@ -4,10 +4,9 @@ div.gallery {
   float: left;
   width: 180px;
 }
-
-div.gallery:hover {
-  border: 1px solid #777;
-}
+i{
+  font-size: 1.2rem;
+  }
 
 div.gallery img {
   width: 100%;

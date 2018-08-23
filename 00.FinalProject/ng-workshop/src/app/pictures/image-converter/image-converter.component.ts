@@ -14,11 +14,11 @@ import { Router } from "@angular/router";
 import { ImageService } from "../image.service";
 
 @Component({
-  selector: "image-upload",
-  templateUrl: "./image-upload.component.html",
-  styleUrls: ["./image-upload.component.css"]
+  selector: "image-convert",
+  templateUrl: "./image-converter.component.html",
+  styleUrls: ["./image-converter.component.css"]
 })
-export class ImageUploadComponent implements OnInit {
+export class ImageConvertComponent implements OnInit {
   task: AngularFireUploadTask;
   percentage: Observable<number>;
   snapshot: Observable<any>;
@@ -53,26 +53,29 @@ export class ImageUploadComponent implements OnInit {
     const date = new Date().getTime();
     const path = `${this.uid}/${date}_${file.name}`;
 
-    //Upload To StorageAsFile
-    this.task = this.storage.upload(path, file);
-
-    this.task.then(data => {
-      data.ref.getDownloadURL().then(imgUrl => {
-        this.downloadURL = imgUrl;
-        this.uploadToDB(imgUrl);
-      });
-    });
-
-    //Progress monitoring
-    this.percentage = this.task.percentageChanges();
-    this.snapshot = this.task.snapshotChanges();
-
-    //MAIN Colorization
-
-    // this.imgService.colorizeLocalImg(file).subscribe(convertedImg => {
-    //   let processed = convertedImg["output_url"];
-    //   this.uploadToDB(processed);
+    // Upload To StorageAsFile
+    // this.task = this.storage.upload(path, file);
+    //
+    // this.task.then(data => {
+    //   const UID = this.authService.getCurrentUser().uid;
+    //
+    //   data.ref.getDownloadURL().then(imgUrl => {
+    //     this.downloadURL = imgUrl;
+    //     this.uploadToDB(UID, imgUrl);
+    //   });
     // });
+
+    // Progress monitoring
+    // this.percentage = this.task.percentageChanges();
+    // this.snapshot = this.task.snapshotChanges();
+
+    //MAIN
+
+    this.imgService.colorizeLocalImg(file)
+      .subscribe(convertedImg => {
+      let processed = convertedImg["output_url"];
+      this.uploadToDB(processed);
+    });
   }
 
   uploadToDB = imageUrl => {

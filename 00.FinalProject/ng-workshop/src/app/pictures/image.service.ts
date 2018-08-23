@@ -21,29 +21,24 @@ export class ImageService {
   uid = this.authService.getCurrentUser().uid;
   collection = [];
 
-
   ////Returns Array[Object]
 
+  getCollection = () => {
+    return firebase
+      .database()
+      .ref(`userCollections/` + this.uid);
+  };
+
+  //Returns Object[Object]
   // getCollection = () => {
   //   firebase
   //     .database()
   //     .ref(`userCollections/` + this.uid)
   //     .on("value", data => {
-  //       let parsed = Object.values(data.val());
+  //       let parsed = data.val();
   //       this.collection = parsed;
   //     });
   // };
-
-  //Returns Object[Object]
-  getCollection = () => {
-    firebase
-      .database()
-      .ref(`userCollections/` + this.uid)
-      .on("value", data => {
-        let parsed = data.val();
-        this.collection = parsed;
-      });
-  };
 
   colorizeLocalImg = file => {
     this.toastr.info("Image Processing", "Please Wait", {
@@ -62,8 +57,12 @@ export class ImageService {
     return this.http.post(API, formData, { headers: headers });
   };
 
-  getImage = imageId =>{
-    return firebase.database().ref(`userCollections/${this.uid}/${imageId}`).once('value');
+  getImage = imageId =>
+    firebase
+      .database()
+      .ref(`userCollections/${this.uid}/${imageId}`)
+      .once("value");
 
-  };
+  deleteImage = imageId =>
+    firebase.database().ref(`userCollections/${this.uid}/${imageId}`);
 }
