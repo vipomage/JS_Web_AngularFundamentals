@@ -27,6 +27,8 @@ export class ImageConvertComponent implements OnInit {
   isHovering: boolean;
   uid: string = this.authService.getCurrentUser().uid;
   url: string;
+  status: string;
+  preventEdit: boolean = false;
 
   constructor(
     private storage: AngularFireStorage,
@@ -43,12 +45,14 @@ export class ImageConvertComponent implements OnInit {
   }
   //Fn Triggered on file select/drop
   startUpload(event: FileList) {
+    this.disableFileUpload();
+    this.status = "Uploading please wait!";
     // The File object
     const file = event.item(0);
 
     // Client-side validation for images
     if (file.type.split("/")[0] !== "image") {
-      this.toastr.error('unsupported file type :(');
+      this.toastr.error("unsupported file type :(");
       return;
     }
 
@@ -64,7 +68,9 @@ export class ImageConvertComponent implements OnInit {
     this.imgService.colorizeLocalImg(file).subscribe(convertedImg => {
       let imageUrl = convertedImg["output_url"]; //converted Image URL
       //get image as blob
+      this.status = "Converting Image Please Wait!";
       this.http.get(imageUrl, { responseType: "blob" }).subscribe(data => {
+        this.status = "Image Converted uploading....";
         //upload to Storage
         this.task = this.storage.upload(path, data);
         //get Link to uploaded img and add to DB for listing
@@ -118,5 +124,11 @@ export class ImageConvertComponent implements OnInit {
       .catch(e => console.log(e.message));
   };
 
-  ngOnInit() {}
+  disableFileUpload = () => {
+    this.preventEdit = !this.preventEdit;
+  };
+
+  ngOnInit() {
+    this.preventEdit = false;
+  }
 }

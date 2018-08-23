@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ImageDeleteComponent } from './image-delete.component';
+import { ImageDeleteComponent } from "./image-delete.component";
 
-describe('ImageDeleteComponent', () => {
+describe("ImageDeleteComponent", () => {
   let component: ImageDeleteComponent;
   let fixture: ComponentFixture<ImageDeleteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImageDeleteComponent ]
-    })
-    .compileComponents();
+      declarations: [ImageDeleteComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('ImageDeleteComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -25,7 +25,8 @@ export class ImageUploadComponent implements OnInit {
   isHovering: boolean;
   uid: string = this.authService.getCurrentUser().uid;
   url: string;
-
+  preventEdit: boolean = false;
+  status: string;
   constructor(
     private storage: AngularFireStorage,
     private db: AngularFirestore,
@@ -39,6 +40,8 @@ export class ImageUploadComponent implements OnInit {
   }
 
   startUpload(event: FileList) {
+    this.status = "Uploading please wait!";
+    this.disableFileUpload();
     // The File object
     const file = event.item(0);
 
@@ -85,6 +88,7 @@ export class ImageUploadComponent implements OnInit {
       .ref(`userCollections/${this.uid}/${key}`)
       .update(pushObj)
       .then(() => {
+        this.status = "";
         this.router.navigate(["/pictures/list"]).then(() => {
           this.toastr.success("Image upload Success");
         });
@@ -105,5 +109,11 @@ export class ImageUploadComponent implements OnInit {
       .catch(e => console.log(e.message));
   };
 
-  ngOnInit() {}
+  disableFileUpload = () => {
+    this.preventEdit = !this.preventEdit;
+  };
+
+  ngOnInit() {
+    this.preventEdit = false;
+  }
 }

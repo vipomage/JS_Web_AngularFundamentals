@@ -9,8 +9,8 @@ import { ImageDetailsComponent } from "./pictures/image-details/image-details.co
 import { ImageEditComponent } from "./pictures/image-edit/image-edit.component";
 import { ImageListComponent } from "./pictures/image-list/image-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
-import {ImageDeleteComponent} from "./pictures/image-delete/image-delete.component";
-import {ImageConvertComponent} from "./pictures/image-converter/image-converter.component";
+import { ImageDeleteComponent } from "./pictures/image-delete/image-delete.component";
+import { ImageConvertComponent } from "./pictures/image-converter/image-converter.component";
 
 const routes: Route[] = [
   { path: "", component: SignupComponent },
@@ -27,11 +27,11 @@ const routes: Route[] = [
     children: [
       { path: "", pathMatch: "full", component: ImageUploadComponent },
       { path: "upload", component: ImageUploadComponent },
-      { path:'convert',component:ImageConvertComponent},
+      { path: "convert", component: ImageConvertComponent },
       { path: "details/:id", component: ImageDetailsComponent },
       { path: "edit/:id", component: ImageEditComponent },
       { path: "list", component: ImageListComponent },
-      { path: 'delete/:id',component:ImageDeleteComponent}
+      { path: "delete/:id", component: ImageDeleteComponent }
     ],
     canActivate: [AuthGuard]
   }

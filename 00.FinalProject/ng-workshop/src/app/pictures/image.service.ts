@@ -1,10 +1,7 @@
 import { Injectable } from "@angular/core";
 import * as firebase from "firebase/app";
 import { AuthService } from "../auth/auth.service";
-import {
-  HttpHeaders,
-  HttpClient
-} from "@angular/common/http";
+import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { ToastrService } from "ngx-toastr";
 
 @Injectable({
@@ -23,9 +20,7 @@ export class ImageService {
   //Returns Array[Object]
   //Get User images
   getCollection = () => {
-    return firebase
-      .database()
-      .ref(`userCollections/` + this.uid);
+    return firebase.database().ref(`userCollections/` + this.uid);
   };
 
   //Returns Object[Object]
@@ -64,7 +59,6 @@ export class ImageService {
       .database()
       .ref(`userCollections/${this.uid}/${imageId}`)
       .once("value");
-
 
   //Delete single image by ID
   deleteImage = imageId =>

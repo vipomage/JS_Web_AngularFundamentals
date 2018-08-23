@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { ImageService } from "../pictures/image.service";
 
 @Component({
   selector: "app-welcome",
@@ -7,9 +6,9 @@ import { ImageService } from "../pictures/image.service";
   styleUrls: ["./welcome.component.css"]
 })
 export class WelcomeComponent implements OnInit {
+  title = "Restogram";
+
   constructor() {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 }
