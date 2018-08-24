@@ -41,7 +41,7 @@ export class AdminComponent implements OnInit {
       .userRef(uid)
       .update({ disabled: false })
       .then(() => {
-        this.toastr.warning("User Disabled!");
+        this.toastr.success("User Enabled!");
       });
   };
 
