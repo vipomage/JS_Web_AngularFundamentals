@@ -28,11 +28,13 @@ export class ImageEditComponent implements OnInit {
     if (!this.uid) {
       this.imgService.getImage(this.imageId).on("value", snap => {
         this.object = snap.val();
-        if (this.object.hasOwnProperty("isPublic")) {
-          this.isPublic = this.object["isPublic"];
-        }
-        if (this.object.hasOwnProperty("dateTaken")) {
-          this.dateTaken = this.object["dateTaken"];
+        if (this.object) {
+          if (this.object.hasOwnProperty("isPublic")) {
+            this.isPublic = this.object["isPublic"];
+          }
+          if (this.object.hasOwnProperty("dateTaken")) {
+            this.dateTaken = this.object["dateTaken"];
+          }
         }
       });
     } else {
