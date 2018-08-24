@@ -40,15 +40,20 @@ export class ImageDeleteComponent implements OnInit {
     this.getImage();
   }
 
-  deleteImage = () => {
+  deleteImage = (imageUrl: string) => {
     let id = this.route.snapshot.params.id;
     this.imgService
-      .deleteImage(id, this.uid)
-      .remove()
+      .deleteImageFromStorage(imageUrl)
+      .delete()
       .then(() => {
-        this.router.navigate(["/pictures/list"]).then(() => {
-          this.toastr.success("Image Deleted!");
-        });
+        this.imgService
+          .deleteImage(id, this.uid)
+          .remove()
+          .then(() => {
+            this.router.navigate(["/pictures/list"]).then(() => {
+              this.toastr.success("Image Deleted!");
+            });
+          });
       });
   };
 

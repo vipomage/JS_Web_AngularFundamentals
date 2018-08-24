@@ -7,7 +7,7 @@ import { ImageService } from "../image.service";
   styleUrls: ["./image-list.component.css"]
 })
 export class ImageListComponent implements OnInit {
-  public collection = [];
+  public collection: Array<Object> = [];
 
   constructor(private imgService: ImageService) {}
 

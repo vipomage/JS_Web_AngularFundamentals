@@ -1,4 +1,7 @@
-<div *ngIf="collection" class="container">
+<div class="container" *ngIf="collection.length === 0">
+  <h3>You do not have any images yet</h3>
+</div>
+<div *ngIf="collection.length !== 0" class="container">
   <div *ngFor="let image of collection" class="gallery">
     <a routerLink="/pictures/details/{{image.id}}">
       <img src="{{image.imageUrl}}">

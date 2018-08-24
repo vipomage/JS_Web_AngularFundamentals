@@ -49,13 +49,15 @@ export class ImageEditComponent implements OnInit {
   };
 
   editImage = (form: NgForm) => {
-    if (form.value.hasOwnProperty("dateTaken")) {
+    if (
+      form.value.hasOwnProperty("dateTaken") &&
+      form.value.dateTaken !== undefined
+    ) {
       this.object["dateTaken"] = form.value.dateTaken;
     }
     if (form.value.hasOwnProperty("isPublic")) {
       this.object["isPublic"] = form.value.isPublic;
     }
-    console.log(form.value);
     this.imgService.updateImage(this.imageId, this.object);
   };
 

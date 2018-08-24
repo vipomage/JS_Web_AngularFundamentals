@@ -80,9 +80,13 @@ export class ImageService {
         this.toastr.success("Image Edit Success");
       });
   };
+  //Delete from storage
+  deleteImageFromStorage = (imageUrl: string): firebase.storage.Reference => {
+    return firebase.storage().refFromURL(imageUrl);
+  };
 
   //Delete single image by ID
-  deleteImage = (imageId, uid?) => {
+  deleteImage = (imageId, uid?): firebase.database.Reference => {
     if (uid) {
       return firebase.database().ref(`userCollections/${uid}/${imageId}`);
     } else {

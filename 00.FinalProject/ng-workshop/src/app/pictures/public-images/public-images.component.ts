@@ -9,7 +9,7 @@ import { ImageService } from "../image.service";
 export class PublicImagesComponent implements OnInit {
   constructor(private imageService: ImageService) {}
 
-  publicImages = [];
+  publicImages: Array<Object> = [];
 
   ngOnInit() {
     this.imageService.getPublicImages().on("value", data => {

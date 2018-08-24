@@ -4,12 +4,18 @@
       <div class="form-group">
         <label for="email">E-Mail</label>
         <input
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
           required
           type="email"
           id="email"
           name="email"
           ngModel
           class="form-control">
+      </div>
+      <div class="wrapper" *ngIf="signInForm.controls.email">
+        <div *ngIf="signInForm.controls.email.invalid && signInForm.controls.email.dirty" class="alert-warning">
+          Invalid E-Mail format
+        </div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -21,6 +27,11 @@
           name="password"
           ngModel
           class="form-control">
+      </div>
+      <div class="wrapper" *ngIf="signInForm.controls.password">
+        <div *ngIf="signInForm.controls.password.invalid && signInForm.controls.password.dirty">Password must be minimum 6
+          characters
+        </div>
       </div>
       <div class="wrapper sign-in">
         <button class="btn btn-block btn-social" [disabled]="signInForm.invalid" type="submit">Sign In with E-Mail

@@ -15,7 +15,6 @@ import { AdminComponent } from "./admin/admin.component";
 import { UserImagesComponent } from "./pictures/user-images/user-images.component";
 
 const routes: Route[] = [
-  { path: "", component: SignupComponent },
   { path: "admin/cp", component: AdminComponent },
   { path: "welcome", component: WelcomeComponent, canActivate: [AuthGuard] },
   {
@@ -50,10 +49,12 @@ const routes: Route[] = [
   {
     path: "users/:uid",
     component: UserImagesComponent
-  }
+  },
+  {path: "", pathMatch: "full", redirectTo: "auth/signup"}
 ];
 
 @NgModule({
+  // { enableTracing: true }
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })

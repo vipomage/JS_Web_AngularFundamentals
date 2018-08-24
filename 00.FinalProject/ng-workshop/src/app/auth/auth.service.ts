@@ -95,8 +95,6 @@ export class AuthService {
       });
   };
 
-  redirect = (url: string) => this.router.navigate([url]);
-
   logout = (): void => {
     firebase
       .auth()
@@ -115,14 +113,6 @@ export class AuthService {
 
   retrieveUser = (): DatabaseReference =>
     firebase.database().ref(`users/${this.currentUser.uid}`);
-
-  checkAdmin = (uid: string): DatabaseReference | boolean => {
-    if (this.token) {
-      return firebase.database().ref(`admins/${uid}`);
-    } else {
-      return false;
-    }
-  };
 
   userRef = (uid: string): DatabaseReference => {
     return firebase.database().ref(`users/${uid}`);
