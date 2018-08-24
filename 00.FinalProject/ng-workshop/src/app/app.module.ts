@@ -56,7 +56,7 @@ import { AuthService } from "./auth/auth.service";
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({preventDuplicates: true}),
     FormsModule,
     HttpClientModule,
     AppRoutingModule,

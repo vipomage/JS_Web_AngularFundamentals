@@ -16,7 +16,7 @@ export class WelcomeComponent implements OnInit {
   ) {
   }
 
-  title = "Restoregram";
+  title = "Colorsnow.online";
   user: User;
 
   ngOnInit() {
