@@ -1,0 +1,16 @@
+<div class="container">
+
+  <h4>Users</h4>
+  <ul>
+    <li class="col" *ngFor="let user of users">
+      <div  class="wrapper col">
+        <h5>{{user.displayName}}</h5>
+        <p>{{user.email}}</p>
+        <button *ngIf="user.disabled" class="btn btn-success" (click)="enableUser(user.uid)">Enable User</button>
+        <button *ngIf="!user.disabled" class="btn btn-danger" (click)="disableUser(user.uid)">Disable User</button>
+        <a class="btn btn-warning" routerLink="/users/{{user.uid}}">View UserCollection</a>
+        <p class="uid"><em>{{user.uid}}</em></p>
+      </div>
+    </li>
+  </ul>
+</div>

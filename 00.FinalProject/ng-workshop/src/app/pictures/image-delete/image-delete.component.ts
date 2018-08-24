@@ -20,12 +20,20 @@ export class ImageDeleteComponent implements OnInit {
 
   user = this.authService.getCurrentUser();
   imageId = this.route.snapshot.params.id;
+  uid = this.route.snapshot.params.uid;
+
   object = {};
 
   getImage = () => {
-    this.imgService.getImage(this.imageId).then(snap => {
-      this.object = snap.val();
-    });
+    if (!this.uid) {
+      this.imgService.getImage(this.imageId).then(snap => {
+        this.object = snap.val();
+      });
+    } else {
+      this.imgService.getImage(this.imageId, this.uid).then(snap => {
+        this.object = snap.val();
+      });
+    }
   };
 
   ngOnInit() {
@@ -35,7 +43,7 @@ export class ImageDeleteComponent implements OnInit {
   deleteImage = () => {
     let id = this.route.snapshot.params.id;
     this.imgService
-      .deleteImage(id)
+      .deleteImage(id, this.uid)
       .remove()
       .then(() => {
         this.router.navigate(["/pictures/list"]).then(() => {

@@ -1,8 +1,13 @@
-<div class="container text-center">
+<div *ngIf="object" class="container text-center">
   <img src="{{object.imageUrl}}" alt="">
   <div class="wrapper">
     <h5>Owner : {{object.owner}}</h5>
     <p>Uploaded on: {{object.uploadedOn|date}}</p>
   </div>
-  <a routerLink="/pictures/edit/{{imageId}}" class="btn btn-warning">Edit</a>
+  <div *ngIf="uid">
+    <a routerLink="/pictures/delete/{{imageId}}/{{uid}}" class="btn btn-danger">Delete</a></div>
+  <div *ngIf="!uid">
+    <a routerLink="/pictures/edit/{{imageId}}" class="btn btn-warning">Edit</a>
+  </div>
+
 </div>

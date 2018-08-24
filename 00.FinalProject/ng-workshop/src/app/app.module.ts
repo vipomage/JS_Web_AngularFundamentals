@@ -4,13 +4,13 @@ import { ToastrModule } from "ngx-toastr";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { environment } from "../environments/environment";
 import { AngularFireModule } from "angularfire2";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 import { AngularFireStorageModule } from "angularfire2/storage";
 import { AngularFireAuthModule } from "angularfire2/auth";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from "./app.component";
 import { SigninComponent } from "./auth/signin/signin.component";
@@ -26,6 +26,10 @@ import { keyValueFilterPipe } from "./key-value-filter.pipe";
 import { ImageDeleteComponent } from "./pictures/image-delete/image-delete.component";
 import { ImageConvertComponent } from "./pictures/image-converter/image-converter.component";
 import { PublicImagesComponent } from "./pictures/public-images/public-images.component";
+import { AdminComponent } from "./admin/admin.component";
+import { UserImagesComponent } from "./pictures/user-images/user-images.component";
+import { ImageService } from "./pictures/image.service";
+import { AuthService } from "./auth/auth.service";
 
 @NgModule({
   declarations: [
@@ -42,7 +46,9 @@ import { PublicImagesComponent } from "./pictures/public-images/public-images.co
     ImageDeleteComponent,
     DropZoneDirective,
     keyValueFilterPipe,
-    PublicImagesComponent
+    PublicImagesComponent,
+    AdminComponent,
+    UserImagesComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +62,7 @@ import { PublicImagesComponent } from "./pictures/public-images/public-images.co
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [ImageService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

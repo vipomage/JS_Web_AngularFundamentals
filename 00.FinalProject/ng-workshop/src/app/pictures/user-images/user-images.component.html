@@ -1,0 +1,10 @@
+<div *ngIf="collection" class="container">
+  <div *ngFor="let image of collection" class="gallery">
+    <a routerLink="/user/{{uid}}/{{image.id}}">
+      <img src="{{image.imageUrl}}">
+    </a>
+    <a target="_blank" href="{{image.imageUrl}}"><i class="fa fa-download"></i> Download</a>
+  </div>
+</div>
+
+

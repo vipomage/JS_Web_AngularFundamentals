@@ -19,8 +19,12 @@ export class ImageService {
 
   //Returns Array[Object]
   //Get User images
-  getCollection = () => {
-    return firebase.database().ref(`userCollections/` + this.uid);
+  getCollection = (uid?) => {
+    if (uid) {
+      return firebase.database().ref(`userCollections/${uid}`);
+    } else {
+      return firebase.database().ref(`userCollections/${this.uid}`);
+    }
   };
 
   //Returns Object[Object]
@@ -54,13 +58,26 @@ export class ImageService {
   };
 
   //Get single image by ID
-  getImage = imageId =>
-    firebase
-      .database()
-      .ref(`userCollections/${this.uid}/${imageId}`)
-      .once("value");
+  getImage = (imageId, uid?) => {
+    if (uid) {
+      return firebase
+        .database()
+        .ref(`userCollections/${uid}/${imageId}`)
+        .once("value");
+    } else {
+      return firebase
+        .database()
+        .ref(`userCollections/${this.uid}/${imageId}`)
+        .once("value");
+    }
+  };
 
   //Delete single image by ID
-  deleteImage = imageId =>
-    firebase.database().ref(`userCollections/${this.uid}/${imageId}`);
+  deleteImage = (imageId, uid?) => {
+    if (uid) {
+      return firebase.database().ref(`userCollections/${uid}/${imageId}`);
+    } else {
+      return firebase.database().ref(`userCollections/${this.uid}/${imageId}`);
+    }
+  };
 }

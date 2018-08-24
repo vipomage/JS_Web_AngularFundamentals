@@ -11,9 +11,12 @@ import { ImageListComponent } from "./pictures/image-list/image-list.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
 import { ImageDeleteComponent } from "./pictures/image-delete/image-delete.component";
 import { ImageConvertComponent } from "./pictures/image-converter/image-converter.component";
+import { AdminComponent } from "./admin/admin.component";
+import { UserImagesComponent } from "./pictures/user-images/user-images.component";
 
 const routes: Route[] = [
   { path: "", component: SignupComponent },
+  { path: "admin/cp", component: AdminComponent },
   { path: "welcome", component: WelcomeComponent, canActivate: [AuthGuard] },
   {
     path: "auth",
@@ -31,9 +34,22 @@ const routes: Route[] = [
       { path: "details/:id", component: ImageDetailsComponent },
       { path: "edit/:id", component: ImageEditComponent },
       { path: "list", component: ImageListComponent },
-      { path: "delete/:id", component: ImageDeleteComponent }
+      { path: "delete/:id", component: ImageDeleteComponent },
+      { path: "delete/:id/:uid", component: ImageDeleteComponent }
     ],
     canActivate: [AuthGuard]
+  },
+  {
+    path: "users/:uid/:id/edit",
+    component: ImageEditComponent
+  },
+  {
+    path: "user/:uid/:id",
+    component: ImageDetailsComponent
+  },
+  {
+    path: "users/:uid",
+    component: UserImagesComponent
   }
 ];
 

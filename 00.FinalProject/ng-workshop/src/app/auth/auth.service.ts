@@ -44,16 +44,20 @@ export class AuthService {
   };
 
   authHandler = (redirectUrl: string) => {
-    this.uploadUserToDb();
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((token: string) => {
-        this.token = token;
-        this.router.navigate([redirectUrl]).then(() => {
-          this.toastr.success("Login Success", "Success");
+    let disabled = this.uploadUserToDb();
+    if (disabled) {
+      return;
+    } else {
+      firebase
+        .auth()
+        .currentUser.getIdToken()
+        .then((token: string) => {
+          this.token = token;
+          this.router.navigate([redirectUrl]).then(() => {
+            this.toastr.success("Login Success", "Success");
+          });
         });
-      });
+    }
   };
 
   uploadUserToDb = (): void => {
@@ -64,20 +68,29 @@ export class AuthService {
       .database()
       .ref(`users/${uid}`)
       .once("value")
-      .then(user => {
-        if (!user.val()) {
-          let customUser = {
-            displayName: currentUser.displayName,
-            email: currentUser.email,
-            uid: currentUser.uid,
-            isAdmin: false
-          };
-          let obj = {};
-          obj[uid] = customUser;
-          firebase
-            .database()
-            .ref("users")
-            .update(obj);
+      .then(data => {
+        let user = data.val();
+        if (user.disabled) {
+          this.logout();
+          this.toastr.clear();
+          this.toastr.warning("This Account is Disabled!");
+          return true;
+        } else {
+          if (!data.val()) {
+            let customUser = {
+              displayName: currentUser.displayName,
+              email: currentUser.email,
+              uid: currentUser.uid,
+              isAdmin: false
+            };
+            let obj = {};
+            obj[uid] = customUser;
+            firebase
+              .database()
+              .ref("users")
+              .update(obj);
+          }
+          return false;
         }
       });
   };
@@ -99,7 +112,18 @@ export class AuthService {
   getCurrentUser = () => firebase.auth().currentUser;
 
   isAuthenticated = () => !!this.token;
-
   retrieveUser = (): DatabaseReference =>
     firebase.database().ref(`users/${this.currentUser.uid}`);
+
+  checkAdmin = (uid: string): DatabaseReference | boolean => {
+    if (this.token) {
+      return firebase.database().ref(`admins/${uid}`);
+    } else {
+      return false;
+    }
+  };
+
+  userRef = (uid: string): DatabaseReference => {
+    return firebase.database().ref(`users/${uid}`);
+  };
 }

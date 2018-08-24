@@ -18,15 +18,22 @@ export class ImageEditComponent implements OnInit {
 
   user = this.authService.getCurrentUser();
   imageId = this.route.snapshot.params.id;
+  uid = this.route.snapshot.params.uid;
   object = {};
 
   isPublic: boolean = false;
   dateTaken;
 
   getImage = () => {
-    this.imgService.getImage(this.imageId).then(snap => {
-      this.object = snap.val();
-    });
+    if (!this.uid) {
+      this.imgService.getImage(this.imageId).then(snap => {
+        this.object = snap.val();
+      });
+    } else {
+      this.imgService.getImage(this.imageId, this.uid).then(snap => {
+        this.object = snap.val();
+      });
+    }
   };
 
   editImage = (form: NgForm) => {
