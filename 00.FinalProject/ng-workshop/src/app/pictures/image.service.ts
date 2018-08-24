@@ -78,7 +78,8 @@ export class ImageService {
       .then(() => {
         window.history.back();
         this.toastr.success("Image Edit Success");
-      });
+      })
+      .catch(e => this.toastr.error(e.message));
   };
   //Delete from storage
   deleteImageFromStorage = (imageUrl: string): firebase.storage.Reference => {

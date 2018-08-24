@@ -60,10 +60,13 @@ export class ImageUploadComponent implements OnInit {
 
     //Get link to uploaded file and upload it userCollection in DB
     this.task.then(data => {
-      data.ref.getDownloadURL().then(imgUrl => {
-        this.downloadURL = imgUrl;
-        this.uploadToDB(imgUrl);
-      });
+      data.ref
+        .getDownloadURL()
+        .then(imgUrl => {
+          this.downloadURL = imgUrl;
+          this.uploadToDB(imgUrl);
+        })
+        .catch(e => this.toastr.error(e.message));
     });
 
     //Progress monitoring
@@ -82,7 +85,6 @@ export class ImageUploadComponent implements OnInit {
       owner: this.authService.getCurrentUser().email,
       uploadedOn: new Date().getTime()
     };
-
     firebase
       .database()
       .ref(`userCollections/${this.uid}/${key}`)
@@ -92,7 +94,8 @@ export class ImageUploadComponent implements OnInit {
         this.router.navigate(["/pictures/list"]).then(() => {
           this.toastr.success("Image upload Success");
         });
-      });
+      })
+      .catch(e => this.toastr.error(e.message));
   };
 
   //Fn which uploads user to users collection in DB

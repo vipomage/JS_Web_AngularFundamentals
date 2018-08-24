@@ -19,9 +19,12 @@ export class AuthService {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        this.router.navigate(["/auth/signin"]).then(() => {
-          this.toastr.success("Successful Registration");
-        });
+        this.router
+          .navigate(["/auth/signin"])
+          .then(() => {
+            this.toastr.success("Successful Registration");
+          })
+          .catch(e => this.toastr.error(e.message));
       })
       .catch(e => {
         this.toastr.error(e.message, "Warning");
@@ -40,7 +43,10 @@ export class AuthService {
     firebase
       .auth()
       .signInWithPopup(this.GOOGLE_PROVIDER)
-      .then(() => this.authHandler("/welcome"));
+      .then(() => this.authHandler("/welcome"))
+      .catch(e => {
+        this.toastr.error(e.message);
+      });
   };
 
   authHandler = (redirectUrl: string) => {
@@ -56,7 +62,8 @@ export class AuthService {
           this.router.navigate([redirectUrl]).then(() => {
             this.toastr.success("Login Success", "Success");
           });
-        });
+        })
+        .catch(e => this.toastr.error(e.message));
     }
   };
 
@@ -92,7 +99,8 @@ export class AuthService {
           }
           return false;
         }
-      });
+      })
+      .catch(e => this.toastr.error(e.message));
   };
 
   logout = (): void => {
@@ -100,11 +108,15 @@ export class AuthService {
       .auth()
       .signOut()
       .then(() => {
-        this.router.navigate(["/auth/signin"]).then(() => {
-          this.token = null;
-          this.toastr.success("Logout Success");
-        });
-      });
+        this.router
+          .navigate(["/auth/signin"])
+          .then(() => {
+            this.token = null;
+            this.toastr.success("Logout Success");
+          })
+          .catch(e => this.toastr.error(e.message));
+      })
+      .catch(e => this.toastr.error(e.message));
   };
 
   getCurrentUser = () => firebase.auth().currentUser;

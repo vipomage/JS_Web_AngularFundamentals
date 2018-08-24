@@ -74,12 +74,17 @@ export class ImageConvertComponent implements OnInit {
         //upload to Storage
         this.task = this.storage.upload(path, data);
         //get Link to uploaded img and add to DB for listing
-        this.task.then(data => {
-          data.ref.getDownloadURL().then(imgUrl => {
-            this.downloadURL = imgUrl;
-            this.uploadToDB(imgUrl);
-          });
-        });
+        this.task
+          .then(data => {
+            data.ref
+              .getDownloadURL()
+              .then(imgUrl => {
+                this.downloadURL = imgUrl;
+                this.uploadToDB(imgUrl);
+              })
+              .catch(e => this.toastr.error(e.message));
+          })
+          .catch(e => this.toastr.error(e.message));
 
         this.percentage = this.task.percentageChanges();
         this.snapshot = this.task.snapshotChanges();
@@ -107,7 +112,8 @@ export class ImageConvertComponent implements OnInit {
         this.router.navigate(["/pictures/list"]).then(() => {
           this.toastr.success("Image upload Success");
         });
-      });
+      })
+      .catch(e => this.toastr.error(e.message));
   };
 
   disableFileUpload = () => {

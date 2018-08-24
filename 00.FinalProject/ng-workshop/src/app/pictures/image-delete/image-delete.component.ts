@@ -53,8 +53,10 @@ export class ImageDeleteComponent implements OnInit {
             this.router.navigate(["/pictures/list"]).then(() => {
               this.toastr.success("Image Deleted!");
             });
-          });
-      });
+          })
+          .catch(e => this.toastr.error(e.message));
+      })
+      .catch(e => this.toastr.error(e.message));
   };
 
   returnBack = () => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 import { User } from "../models/user";
 import { DataSnapshot } from "angularfire2/database/interfaces";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: "app-welcome",
@@ -9,7 +10,11 @@ import { DataSnapshot } from "angularfire2/database/interfaces";
   styleUrls: ["./welcome.component.css"]
 })
 export class WelcomeComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {
+  }
 
   title = "Restogram";
   user: User;
@@ -20,6 +25,7 @@ export class WelcomeComponent implements OnInit {
       .once("value")
       .then((data: DataSnapshot) => {
         this.user = data.val();
-      });
+      })
+      .catch(e => this.toastr.error(e.message));
   }
 }

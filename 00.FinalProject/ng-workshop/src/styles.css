@@ -3,15 +3,19 @@ button,
 .btn {
   margin: 5px;
 }
+
 img {
   box-shadow: 3px -3px 9px 0 #0a0b0d;
 }
+
 a:hover {
   cursor: pointer;
 }
+
 a {
   color: white;
 }
+
 .dropzone h1 {
   vertical-align: center;
   color: orange;
