@@ -18,7 +18,9 @@ export class PublicImagesComponent implements OnInit {
       for (let uid in parsed) {
         for (let objId in parsed[uid]) {
           if (parsed[uid][objId].hasOwnProperty("isPublic")) {
-            temp.push(parsed[uid][objId]);
+            if (parsed[uid][objId]["isPublic"]) {
+              temp.push(parsed[uid][objId]);
+            }
           }
         }
       }

@@ -18,16 +18,16 @@ export class ImageDetailsComponent implements OnInit {
   user = this.authService.getCurrentUser();
   imageId = this.route.snapshot.params.id;
   uid = this.route.snapshot.params.uid;
-  isPublic :boolean = false;
+  isPublic: boolean = false;
   object = {};
 
   getImage = () => {
     if (!this.uid) {
-      this.imgService.getImage(this.imageId).on('value',snap => {
+      this.imgService.getImage(this.imageId).on("value", snap => {
         this.object = snap.val();
       });
     } else {
-      this.imgService.getImage(this.imageId, this.uid).on('value',snap => {
+      this.imgService.getImage(this.imageId, this.uid).on("value", snap => {
         this.object = snap.val();
       });
     }
@@ -39,5 +39,4 @@ export class ImageDetailsComponent implements OnInit {
     this.isPublic = this.route.snapshot.params.public !== "1";
     this.getImage();
   }
-
 }

@@ -64,15 +64,9 @@ export class ImageService {
   //Get single image by ID
   getImage = (imageId, uid?) => {
     if (uid) {
-      return firebase
-        .database()
-        .ref(`userCollections/${uid}/${imageId}`)
-
+      return firebase.database().ref(`userCollections/${uid}/${imageId}`);
     } else {
-      return firebase
-        .database()
-        .ref(`userCollections/${this.uid}/${imageId}`)
-
+      return firebase.database().ref(`userCollections/${this.uid}/${imageId}`);
     }
   };
 

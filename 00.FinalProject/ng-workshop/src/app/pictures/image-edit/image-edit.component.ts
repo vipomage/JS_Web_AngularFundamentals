@@ -21,33 +21,42 @@ export class ImageEditComponent implements OnInit {
   uid = this.route.snapshot.params.uid;
   object = {};
 
-  isPublic: boolean = false;
+  isPublic: boolean;
   dateTaken;
 
   getImage = () => {
     if (!this.uid) {
-      this.imgService.getImage(this.imageId).on('value',snap => {
+      this.imgService.getImage(this.imageId).on("value", snap => {
         this.object = snap.val();
+        if (this.object.hasOwnProperty("isPublic")) {
+          this.isPublic = this.object["isPublic"];
+        }
+        if (this.object.hasOwnProperty("dateTaken")) {
+          this.dateTaken = this.object["dateTaken"];
+        }
       });
     } else {
-      this.imgService.getImage(this.imageId, this.uid).on('value',snap => {
+      this.imgService.getImage(this.imageId, this.uid).on("value", snap => {
         this.object = snap.val();
+        if (this.object.hasOwnProperty("isPublic")) {
+          this.isPublic = this.object["isPublic"];
+        }
+        if (this.object.hasOwnProperty("dateTaken")) {
+          this.dateTaken = this.object["dateTaken"];
+        }
       });
     }
   };
 
   editImage = (form: NgForm) => {
-
-    //todo fix making image private
-    if (form.value.dateTaken){
-      this.object['dateTaken'] = form.value.dateTaken;
+    if (form.value.hasOwnProperty("dateTaken")) {
+      this.object["dateTaken"] = form.value.dateTaken;
     }
-    if (form.value.isPublic){
-      this.object['isPublic'] = form.value.isPublic;
+    if (form.value.hasOwnProperty("isPublic")) {
+      this.object["isPublic"] = form.value.isPublic;
     }
-
-    this.imgService.updateImage(this.imageId,this.object);
-
+    console.log(form.value);
+    this.imgService.updateImage(this.imageId, this.object);
   };
 
   toggleVisibility = e => {

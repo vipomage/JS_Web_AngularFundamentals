@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
       <label class="container">
-      <input name="isPublic" type="checkbox" [(ngModel)]="isPublic"  data-md-icheck (change)="toggleVisibility($event)"/>
+      <input [checked]="isPublic" name="isPublic" type="checkbox" [(ngModel)]="isPublic"  data-md-icheck (change)="toggleVisibility($event)"/>
       <span *ngIf="isPublic"> Public</span><span *ngIf="!isPublic"> Private</span>
 
       <span class="checkmark"></span>
