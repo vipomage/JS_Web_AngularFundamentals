@@ -3,6 +3,7 @@ import * as firebase from "firebase/app";
 import { AuthService } from "../auth/auth.service";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { ToastrService } from "ngx-toastr";
+import { DatabaseReference } from "angularfire2/database/interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -26,6 +27,9 @@ export class ImageService {
       return firebase.database().ref(`userCollections/${this.uid}`);
     }
   };
+
+  getPublicImages = (): DatabaseReference =>
+    firebase.database().ref("userCollections");
 
   //Returns Object[Object]
   //Get User images
@@ -63,13 +67,24 @@ export class ImageService {
       return firebase
         .database()
         .ref(`userCollections/${uid}/${imageId}`)
-        .once("value");
+
     } else {
       return firebase
         .database()
         .ref(`userCollections/${this.uid}/${imageId}`)
-        .once("value");
+
     }
+  };
+
+  updateImage = (id: string, newObj: Object) => {
+    firebase
+      .database()
+      .ref(`userCollections/${this.uid}/${id}`)
+      .update(newObj)
+      .then(() => {
+        window.history.back();
+        this.toastr.success("Image Edit Success");
+      });
   };
 
   //Delete single image by ID

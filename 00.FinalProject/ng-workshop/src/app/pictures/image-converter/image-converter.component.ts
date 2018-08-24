@@ -68,7 +68,7 @@ export class ImageConvertComponent implements OnInit {
     this.imgService.colorizeLocalImg(file).subscribe(convertedImg => {
       let imageUrl = convertedImg["output_url"]; //converted Image URL
       //get image as blob
-      this.status = "Converting Image Please Wait!";
+      this.status = "Converting Image ...";
       this.http.get(imageUrl, { responseType: "blob" }).subscribe(data => {
         this.status = "Image Converted uploading....";
         //upload to Storage

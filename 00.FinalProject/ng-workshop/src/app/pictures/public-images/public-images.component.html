@@ -1,5 +1,12 @@
 <div class="container">
-
   <h3>Here are some public images!</h3>
-  <h1>//todo LIST PUBLIC IMAGES!</h1>
+  <div *ngIf="publicImages" class="container">
+    <div *ngFor="let image of publicImages" class="gallery">
+      <a target="_blank" href="{{image.imageUrl}}">
+        <img src="{{image.imageUrl}}">
+        <p>{{image.owner}}</p>
+      </a>
+      </div>
+  </div>
+
 </div>

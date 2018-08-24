@@ -2,12 +2,19 @@
   <img src="{{object.imageUrl}}" alt="">
   <div class="wrapper">
     <h5>Owner : {{object.owner}}</h5>
-    <p>Uploaded on: {{object.uploadedOn|date}}</p>
+    <div *ngIf="controls">
+      <p>Uploaded on: {{object.uploadedOn|date}}</p>
+      <p *ngIf="object.dateTaken">Picture Taken on: {{object.dateTaken}}</p>
+      <button *ngIf="object.isPublic" disabled class="bnt btn-warning">Image is Public</button>
+      <button *ngIf="!object.isPublic" disabled class="bnt btn-success">Image is Private</button>
+    </div>
   </div>
-  <div *ngIf="uid">
-    <a routerLink="/pictures/delete/{{imageId}}/{{uid}}" class="btn btn-danger">Delete</a></div>
-  <div *ngIf="!uid">
-    <a routerLink="/pictures/edit/{{imageId}}" class="btn btn-warning">Edit</a>
-  </div>
+
+    <div *ngIf="uid">
+      <a routerLink="/pictures/delete/{{imageId}}/{{uid}}" class="btn btn-danger">Delete</a></div>
+    <div *ngIf="!uid">
+      <a routerLink="/pictures/edit/{{imageId}}" class="btn btn-warning">Edit</a>
+    </div>
+
 
 </div>

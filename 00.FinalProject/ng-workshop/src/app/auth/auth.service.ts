@@ -112,6 +112,7 @@ export class AuthService {
   getCurrentUser = () => firebase.auth().currentUser;
 
   isAuthenticated = () => !!this.token;
+
   retrieveUser = (): DatabaseReference =>
     firebase.database().ref(`users/${this.currentUser.uid}`);
 

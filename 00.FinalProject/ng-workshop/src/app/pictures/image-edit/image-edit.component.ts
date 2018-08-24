@@ -26,18 +26,28 @@ export class ImageEditComponent implements OnInit {
 
   getImage = () => {
     if (!this.uid) {
-      this.imgService.getImage(this.imageId).then(snap => {
+      this.imgService.getImage(this.imageId).on('value',snap => {
         this.object = snap.val();
       });
     } else {
-      this.imgService.getImage(this.imageId, this.uid).then(snap => {
+      this.imgService.getImage(this.imageId, this.uid).on('value',snap => {
         this.object = snap.val();
       });
     }
   };
 
   editImage = (form: NgForm) => {
-    console.log(form.value);
+
+    //todo fix making image private
+    if (form.value.dateTaken){
+      this.object['dateTaken'] = form.value.dateTaken;
+    }
+    if (form.value.isPublic){
+      this.object['isPublic'] = form.value.isPublic;
+    }
+
+    this.imgService.updateImage(this.imageId,this.object);
+
   };
 
   toggleVisibility = e => {

@@ -26,11 +26,11 @@ export class ImageDeleteComponent implements OnInit {
 
   getImage = () => {
     if (!this.uid) {
-      this.imgService.getImage(this.imageId).then(snap => {
+      this.imgService.getImage(this.imageId).on('value',snap => {
         this.object = snap.val();
       });
     } else {
-      this.imgService.getImage(this.imageId, this.uid).then(snap => {
+      this.imgService.getImage(this.imageId, this.uid).on('value',snap => {
         this.object = snap.val();
       });
     }

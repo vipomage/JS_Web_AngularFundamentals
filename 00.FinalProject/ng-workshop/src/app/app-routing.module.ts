@@ -28,10 +28,10 @@ const routes: Route[] = [
   {
     path: "pictures",
     children: [
-      { path: "", pathMatch: "full", component: ImageUploadComponent },
       { path: "upload", component: ImageUploadComponent },
       { path: "convert", component: ImageConvertComponent },
       { path: "details/:id", component: ImageDetailsComponent },
+      { path: "details/:id/:uid/1", component: ImageDetailsComponent },
       { path: "edit/:id", component: ImageEditComponent },
       { path: "list", component: ImageListComponent },
       { path: "delete/:id", component: ImageDeleteComponent },

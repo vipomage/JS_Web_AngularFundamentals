@@ -18,21 +18,26 @@ export class ImageDetailsComponent implements OnInit {
   user = this.authService.getCurrentUser();
   imageId = this.route.snapshot.params.id;
   uid = this.route.snapshot.params.uid;
+  isPublic :boolean = false;
   object = {};
 
   getImage = () => {
     if (!this.uid) {
-      this.imgService.getImage(this.imageId).then(snap => {
+      this.imgService.getImage(this.imageId).on('value',snap => {
         this.object = snap.val();
       });
     } else {
-      this.imgService.getImage(this.imageId, this.uid).then(snap => {
+      this.imgService.getImage(this.imageId, this.uid).on('value',snap => {
         this.object = snap.val();
       });
     }
   };
 
   ngOnInit() {
+    this.imageId = this.route.snapshot.params.id;
+    this.uid = this.route.snapshot.params.uid;
+    this.isPublic = this.route.snapshot.params.public !== "1";
     this.getImage();
   }
+
 }
